@@ -113,6 +113,8 @@ contract AlluvaToken is ERC20Interface, Owned, SafeMath {
     // @param _value Number of tokens to transfer (in smallest divisible unit)
     // @return True if transaction was successful
     function transfer(address _to, uint256 _value) public returns (bool success) {
+        require(_to != address(0));
+
         require(balances[msg.sender] >= _value);
         balances[msg.sender] = safeSub(balances[msg.sender], _value);
         balances[_to] = safeAdd(balances[_to], _value);
@@ -127,6 +129,8 @@ contract AlluvaToken is ERC20Interface, Owned, SafeMath {
     // @param _value Number of tokens to transfer (in smallest divisible unit)
     // @return True if transaction was successful
     function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
+        require(_to != address(0));
+
         allowed[_from][msg.sender] = safeSub(allowed[_from][msg.sender], _value);
         balances[_from] = safeSub(balances[_from], _value);
         balances[_to] = safeAdd(balances[_to], _value);
@@ -142,6 +146,8 @@ contract AlluvaToken is ERC20Interface, Owned, SafeMath {
     // @param _value Number of tokens to allow spender (in smallest divisible unit)
     // @return True if transaction was successful
     function approve(address _spender, uint256 _value) public returns (bool success) {
+        require(_spender != address(0));
+
         allowed[msg.sender][_spender] = _value;
         emit Approval(msg.sender, _spender, _value);
         return true;
