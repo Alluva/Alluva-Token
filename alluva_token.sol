@@ -156,6 +156,39 @@ contract AlluvaToken is ERC20Interface, Owned, SafeMath {
         return allowed[_owner][_spender];
     }
 
+    // @dev Increase the amount of tokens that _spender can transfer from owner
+    // approve should be called when allowed[_spender] == 0. To increment
+    // allowed value use this function to avoid 2 calls (and wait until the
+    // first transaction is mined)
+    // From OpenZeppelin ERC20.sol
+    // Emits an Approval event
+    // @param _spender The address that is allowed to spend funds
+    // @param _addedValue The value to add to allowance
+    function increaseAllowance(address _spender, uint256 _addedValue) public returns (bool) {
+        require(_spender != address(0));
+
+        allowed[msg.sender][_spender] = safeAdd(allowed[msg.sender][_spender], _addedValue);
+        emit Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+        return true;
+    }
+
+    // @dev Decrease the amount of tokens that _spender can transfer from owner
+    // approve should be called when allowed[_spender] == 0. To decrease
+    // allowed value use this function to avoid 2 calls (and wait until the
+    // first transaction is mined)
+    // From OpenZeppelin ERC20.sol
+    // Emits an Approval event
+    // @param _spender The address that is allowed to spend funds
+    // @param _subtractedValue The value to subtract from allowance
+    function decreaseAllowance(address _spender, uint256 _subtractedValue) public returns (bool) {
+        require(_spender != address(0));
+
+        allowed[msg.sender][_spender] = safeSub(allowed[msg.sender][_spender], _subtractedValue);
+        emit Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
+        return true;
+    }
+
+
     // @dev Fallback function to reject ether sent to contract
     function () external payable {
         revert();
