@@ -1,6 +1,6 @@
 # Alluva Token
 
-This repository stores the code for the Alluva
+This repository stores the code for the Alluva token.
 
 
 # Token Contract
