@@ -94,7 +94,7 @@ contract AlluvaToken is ERC20Interface, Owned, SafeMath {
     // @dev Constructor function
     constructor() public {
         symbol = "ALV";
-        name = "Alluva Token";
+        name = "Alluva";
         decimals = 18;
         totalSupply = 3000000000000000000000000000;
         balances[owner] = totalSupply;
